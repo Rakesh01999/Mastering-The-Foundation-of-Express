@@ -63,10 +63,10 @@ app.get('/', logger, (req: Request, res: Response, next: NextFunction) => {
 
   // res.send('Hello Developers !')
   // res.send(something) // to make error
-  try{
+  try {
     res.send(something);
-  }catch(error){
-    console.log(error);
+  } catch (error) {
+    // console.log(error);
     next(error)
     // res.status(400).json({
     //   success: false,
@@ -85,17 +85,24 @@ app.post('/', logger, (req: Request, res: Response) => {
 });
 
 
+app.all("*", (req: Request, res: Response) => {
+  res.status(400).json({
+    success: false,
+    message: "Route is not found ",
+  });
+});
+
 
 // global error handler
-app.use((error:any, req: Request, res: Response, next: NextFunction) => {
+app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   console.log(error);
-  if(error){
+  if (error) {
     res.status(400).json({
       success: false,
       message: 'something went wrong'
     })
   }
-}); 
+});
 
 
 export default app;

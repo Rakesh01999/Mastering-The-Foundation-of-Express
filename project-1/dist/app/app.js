@@ -55,7 +55,7 @@ app.get('/', logger, (req, res, next) => {
         res.send(something);
     }
     catch (error) {
-        console.log(error);
+        // console.log(error);
         next(error);
         // res.status(400).json({
         //   success: false,
@@ -68,6 +68,12 @@ app.post('/', logger, (req, res) => {
     // res.send("got data");
     res.json({
         message: "successfully received data",
+    });
+});
+app.all("*", (req, res) => {
+    res.status(400).json({
+        success: false,
+        message: "Route is not found ",
     });
 });
 // global error handler
