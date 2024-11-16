@@ -10,6 +10,29 @@ const port = 3000;
 // parser
 app.use(express_1.default.json());
 app.use(express_1.default.text());
+// 
+const userRouter = express_1.default.Router();
+const courseRouter = express_1.default.Router();
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/courses", courseRouter);
+userRouter.post('/create-user', (req, res) => {
+    const user = req.body;
+    console.log(user);
+    res.json({
+        success: true,
+        message: "User is created successfully",
+        data: user,
+    });
+});
+userRouter.post('/create-course', (req, res) => {
+    const course = req.body;
+    console.log(course);
+    res.json({
+        success: true,
+        message: "course is created successfully",
+        data: course,
+    });
+});
 const logger = (req, res, next) => {
     console.log(req.url, req.method, req.hostname);
     next();
