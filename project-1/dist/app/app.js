@@ -49,7 +49,18 @@ const logger = (req, res, next) => {
 app.get('/', logger, (req, res) => {
     // console.log(req.query.name);
     // console.log(req.query.email);
-    res.send('Hello Developers !');
+    // res.send('Hello Developers !')
+    // res.send(something) // to make error
+    try {
+        res.send(something);
+    }
+    catch (error) {
+        console.log(error);
+        res.status(400).json({
+            success: false,
+            message: 'failed to get data',
+        });
+    }
 });
 app.post('/', logger, (req, res) => {
     console.log(req.body);
@@ -57,5 +68,9 @@ app.post('/', logger, (req, res) => {
     res.json({
         message: "successfully received data",
     });
+});
+// global error handler
+app.use((error, req, res, next) => {
+    console.log(error);
 });
 exports.default = app;

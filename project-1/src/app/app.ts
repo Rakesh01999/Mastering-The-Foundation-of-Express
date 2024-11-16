@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from 'express'
+import express, { NextFunction, Request, response, Response } from 'express'
 // const express = require('express')
 const app = express()
 const port = 3000
@@ -60,7 +60,19 @@ const logger = (req: Request, res: Response, next: NextFunction) => {
 app.get('/', logger, (req: Request, res: Response) => {
   // console.log(req.query.name);
   // console.log(req.query.email);
-  res.send('Hello Developers !')
+
+  // res.send('Hello Developers !')
+  // res.send(something) // to make error
+  try{
+    res.send(something);
+  }catch(error){
+    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: 'failed to get data',
+    })
+  }
+
 });
 
 app.post('/', logger, (req: Request, res: Response) => {
@@ -70,5 +82,13 @@ app.post('/', logger, (req: Request, res: Response) => {
     message: "successfully received data",
   });
 });
+
+
+
+// global error handler
+app.use((error:any, req: Request, res: Response, next: NextFunction) => {
+  console.log(error);
+}); 
+
 
 export default app;
