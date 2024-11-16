@@ -56,6 +56,7 @@ app.get('/', logger, (req, res, next) => {
     }
     catch (error) {
         console.log(error);
+        next(error);
         // res.status(400).json({
         //   success: false,
         //   message: 'failed to get data',
@@ -72,5 +73,11 @@ app.post('/', logger, (req, res) => {
 // global error handler
 app.use((error, req, res, next) => {
     console.log(error);
+    if (error) {
+        res.status(400).json({
+            success: false,
+            message: 'something went wrong'
+        });
+    }
 });
 exports.default = app;

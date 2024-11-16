@@ -67,6 +67,7 @@ app.get('/', logger, (req: Request, res: Response, next: NextFunction) => {
     res.send(something);
   }catch(error){
     console.log(error);
+    next(error)
     // res.status(400).json({
     //   success: false,
     //   message: 'failed to get data',
@@ -88,6 +89,12 @@ app.post('/', logger, (req: Request, res: Response) => {
 // global error handler
 app.use((error:any, req: Request, res: Response, next: NextFunction) => {
   console.log(error);
+  if(error){
+    res.status(400).json({
+      success: false,
+      message: 'something went wrong'
+    })
+  }
 }); 
 
 
