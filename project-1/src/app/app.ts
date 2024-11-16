@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 // const express = require('express')
 const app = express()
 const port = 3000
@@ -7,11 +7,31 @@ const port = 3000
 app.use(express.json());
 app.use(express.text());
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello Developers !')
-})
 
-app.post('/', (req: Request, res: Response) => {
+const logger = (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.url, req.method, req.hostname);
+  next();
+}
+
+
+// app.get('/:userId/:subId', (req: Request, res: Response) => {
+//   console.log(req.params);
+//   res.send('Hello Developers !')
+// })
+
+// app.get('/', (req: Request, res: Response) => {
+//   // console.log(req.query.name);
+//   // console.log(req.query.email);
+//   res.send('Hello Developers !')
+// })
+
+app.get('/', logger, (req: Request, res: Response) => {
+  // console.log(req.query.name);
+  // console.log(req.query.email);
+  res.send('Hello Developers !')
+});
+
+app.post('/', logger, (req: Request, res: Response) => {
   console.log(req.body);
   // res.send("got data");
   res.json({
