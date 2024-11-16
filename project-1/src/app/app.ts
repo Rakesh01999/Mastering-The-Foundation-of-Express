@@ -57,7 +57,7 @@ const logger = (req: Request, res: Response, next: NextFunction) => {
 //   res.send('Hello Developers !')
 // })
 
-app.get('/', logger, (req: Request, res: Response) => {
+app.get('/', logger, (req: Request, res: Response, next: NextFunction) => {
   // console.log(req.query.name);
   // console.log(req.query.email);
 
@@ -67,10 +67,10 @@ app.get('/', logger, (req: Request, res: Response) => {
     res.send(something);
   }catch(error){
     console.log(error);
-    res.status(400).json({
-      success: false,
-      message: 'failed to get data',
-    })
+    // res.status(400).json({
+    //   success: false,
+    //   message: 'failed to get data',
+    // })
   }
 
 });
